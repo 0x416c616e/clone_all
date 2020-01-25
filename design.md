@@ -19,5 +19,7 @@
 12. To-do: Look through all the HTML files again, but this time to find repo download links.
 13. To-do: create a reset.sh script to delete downloaded files. Optional/not required for this to work.
 14. To-do: Use the GitHub repo links to clone all the repos to the repos/ subdirectory.
+15. To-do: used linked list for the page links, use stack for the links of repos to clone
+
 
 
