@@ -13,4 +13,6 @@ A tool for cloning/copying all repos from a given GitHub user, all at the same t
 ./clone_all.py username_goes_here
 ```
 
+## Design doc
 
+There is a design doc that explains the design of the program, called design.md.

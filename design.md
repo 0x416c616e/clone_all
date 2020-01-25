@@ -15,4 +15,9 @@
 	-"disabled="disabled">Next</button></div>"
 9. If the above string is within the HTML, that means there is no additional page of repos.
 10. To-do: how to loop and download multiple files by finding the url of the "next" button's link
+11. To-do: If there are next pages, download them all and loop. 
+12. To-do: Look through all the HTML files again, but this time to find repo download links.
+13. To-do: create a reset.sh script to delete downloaded files. Optional/not required for this to work.
+14. To-do: Use the GitHub repo links to clone all the repos to the repos/ subdirectory.
+
 
