@@ -11,7 +11,7 @@ import requests
 import io
 #Alan's Simple IO: contains 
 import asio
-
+import time
 
 
 #main program 'driver' function
@@ -47,7 +47,7 @@ def main():
 
     #search for 404 string: user might not even exist, after all
     string_404 = '<img alt="404 &ldquo;This is not the web page you are looking for&rdquo;'
-    if (asio.search(string_404, first_page_name)):
+    if (asio.search_utf8(string_404, first_page_name)):
         print("404: GitHub user " + username + " not found")
         asio.delete(first_page_name)
         sys.exit(1)
@@ -58,7 +58,7 @@ def main():
     #from first_repo_page.html
     #"doesn’t have any public repositories yet."
     no_repos_string = "have any public repositories yet"
-    if (asio.search(no_repos_string, first_page_name)):
+    if (asio.search_utf8(no_repos_string, first_page_name)):
         print("User has no repos")
         #can't proceed with program if the user has no repos
         asio.delete(first_page_name)
@@ -76,12 +76,13 @@ def main():
     #number of html pages of repos
     number_of_pages = 1
 
-    #will loop until there is no "next" page,
+    #program will loop until there is no "next" page,
     #at which point should_proceed will be set to False
     should_proceed = True
 
+    #getting first 'next page'
     next_repo_string = "tab=repositories\">Next</a></div>"
-    if (asio.search(next_repo_string, first_page_name)):
+    if (asio.search_utf8(next_repo_string, first_page_name)):
         print("User has more than one page worth of repos")
         number_of_pages += 1
         #================================================
@@ -96,7 +97,77 @@ def main():
             print("there is no next page")
             should_proceed = False
         else:
-            print("Next page URL: " + next_page_url)
+            #"next_page_url" is actually an entire line of HTML
+            #the line has some undesirable stuff at the
+            #beginning and end, so you need to get rid of the 
+            #stuff before the next url and the stuff after it
+            #and then you'll be left with just the next page url
+
+            #strip front off line using find() and string slicing
+            #https://www.programiz.com/python-programming/methods/string/find
+            start_index = next_page_url.find("https://")
+            #get rid of beginning of line, starting only with https:// now
+            next_page_url = next_page_url[start_index:]
+            #finding where the url ends
+            trailing_data = "s\">Next</a></div>"
+            end_index = next_page_url.find(trailing_data)
+            #add one to avoid an off-by-one error
+            end_index = end_index + 1
+            #get rid of stuff at the end after the URL is finished
+            next_page_url = next_page_url[:end_index]
+            print("Next page URL for page 2:" + next_page_url)
+
+            #loop for finding pages 2+
+            while (should_proceed == True):
+                #the previous loop's "next" is this loop's "current"
+                current_repo_page_url = next_page_url
+                #repo_page_2.html, repo_page_3.html, repo_page_4.html, etc
+                page_name = "html/repo_page_" + str(number_of_pages) + ".html"
+                print("page name: " + page_name)
+                print("current repo page url:" + current_repo_page_url)
+                #I got a 429 Too Many Requests error until I added this sleep()
+                time.sleep(2)
+                asio.dl_write_utf8(current_repo_page_url, page_name)
+                #if there is yet another page
+                if (asio.search_utf8(next_repo_string, page_name)):
+                    print("another page was found")
+                    next_page_url = ""
+                    next_page_url = asio.utf8_get_line_with(next_repo_string, page_name)
+                    if (next_page_url == ""):
+                        print("error")
+                        sys.exit(1)
+                    elif (next_page_url == "not_found"):
+                        print("there is no next page")
+                        should_proceed = False
+                    else:
+                        print("there is another page")
+                        number_of_pages += 1
+                        #rfind means find the LAST occurrence
+                        start_index = next_page_url.rfind("https://")
+
+                        #get rid of beginning of line, starting only with https:// now
+                        next_page_url = next_page_url[start_index:]
+                        #finding where the url ends
+                        trailing_data = "s\">Next</a></div>"
+                        end_index = next_page_url.find(trailing_data)
+                        #add one to avoid an off-by-one error
+                        end_index = end_index + 1
+                        #get rid of stuff at the end after the URL is finished
+                        next_page_url = next_page_url[:end_index]
+                        print("Next page URL for page " + str(number_of_pages) + ": " + next_page_url)
+                
+                #no more pages     
+                else:
+                    print("no more pages to find and download")
+                    print("number of pages: " + str(number_of_pages))
+                    should_proceed = False
+            
+            
+
+
+
+
+
         #================================================
         #make the above stuff generalizable and able to loop and whatnot
         #to download and search through as many html pages as possible
@@ -114,8 +185,7 @@ def main():
     #then its clone link is this: https://github.com/0x416c616e/clone_all.git
     #just append ".git"
 
-    
-
+    print("number of pages:" + str(number_of_pages))
 
 
 
