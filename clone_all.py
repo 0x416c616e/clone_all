@@ -43,10 +43,10 @@ def main():
     
     
     #download
-    response = asio.safe_download(first_repo_page_url)
+    response = asio.download(first_repo_page_url)
 
     #write HTTP response to file
-    asio.safe_write_utf8("first_repo_page.html", response.text)
+    asio.write_utf8("first_repo_page.html", response.text)
 
 
     
