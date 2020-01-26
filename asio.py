@@ -42,14 +42,14 @@ def delete(filename):
     except IOError as e:
         ex_msg(filename, e, "delete", "deleting")
 
-#delete file, then make new blank file with the same filename
+#clear the contents of a file
 def clear_file(filename):
     try:
         f = open(filename, "w")
         f.write("")
         f.close()
     except IOError as e:
-        ex_msg(filename, e, "clear_file", "deleting")
+        ex_msg(filename, e, "clear_file", "clearing")
 
 #confirmation
 #exampe usage: confirm("example.txt", "delete")
@@ -100,8 +100,9 @@ def delete_if_exists(filename):
         delete(filename)
 
 #create a new blank file if it does not exist
-def create_if_dne():
-    print("not done")
+def create_if_dne(filename):
+    if (does_not_exist(filename)):
+        clear_file(filename)
 
 
 #=====Write functions=====
@@ -141,8 +142,8 @@ def write_binary(filename, data):
         ex_msg(filename, e, "write_binary", "writing")
 
 #create a blank file
-def create_blank():
-    print("")
+def create_blank(filename):
+    clear_file(filename)
 
 
 #=====Copy functions=====
@@ -191,7 +192,7 @@ def append_text(filename, append_data):
 def append_binary(filename, append_data):
     if (exists(filename)):
         try:
-            append_file = open(filename, "r+b")
+            append_file = open(filename, "ab")
             append_file.write(append_data)
             append_file.close()
         except IOError as e:
@@ -317,19 +318,25 @@ def open_utf8(filename):
         ex_msg(filename, e, "open_utf8", "opening")
 
 #open and return text
-def open_text():
-    print("not done")
+def open_text(filename):
+    try:
+        return open(filename, "r")
+    except IOError as e:
+        ex_msg(filename, e, "open_text", "opening")
 
 #open and return binary
-def open_binary():
-    print("not done")
+def open_binary(filename):
+    try:
+        return open(filename, "rb")
+    except IOError as e:
+        ex_msg(filename, e, "open_binary", "opening")
 
 
 
 
 #=====Search functions=====
 
-#search file for string
+#search utf8-encoded file for a certain string
 def search_utf8(str_to_find, filename):
     try:
         file_to_search = open(filename, encoding="utf8", mode="r")
@@ -339,7 +346,32 @@ def search_utf8(str_to_find, filename):
             return False
         file_to_search.close()
     except IOError as e:
-        ex_msg(filename, e, "search", "searching")
+        ex_msg(filename, e, "search_utf8", "searching")
+
+#search text file for a certain string
+def search_text(str_to_find, filename):
+    try:
+        file_to_search = open(filename, "r")
+        if str_to_find in file_to_search.read():
+            return True
+        else:
+            return False
+        file_to_search.close()
+    except IOError as e:
+        ex_msg(filename, e, "search_text", "searching")
+
+#search binary file for certain data
+def search_binary(data_to_find, filename):
+    try:
+        file_to_search = open(filename, "rb")
+        if data_to_find in file_to_search.read():
+            return True
+        else:
+            return False
+        file_to_search.close()
+    except IOError as e:
+        ex_msg(filename, e, "search_binary", "searching")
+
 
 
 #return a single line that contains a search term
@@ -361,22 +393,39 @@ def utf8_get_line_with(str_to_find, filename):
     except IOError as e:
         ex_msg(filename, e, "get_line_contains", "searching")
 
+#return single line that contains a search term
+#from a text file
 def text_get_line_with(str_to_find, filename):
     print("not done")
 
+#return single line that contains certain data
+#from a binary file
 def binary_get_line_with(data_to_find, filename):
     print("not done")
 
+
+
+
+
 #get all lines with a search string
 
-def utf8_get_lines_with():
+#get all lines in a utf8-encoded file
+#that contain a certain string
+def utf8_get_lines_with(str_to_find, filename):
     print("not done")
 
-def text_get_lines_with():
+#get all lines in a text file
+#that contain a certain string
+def text_get_lines_with(str_to_find, filename):
     print("not done")
 
-def binary_get_lines_with():
+#get all lines in a binary file
+#that contain certain data
+def binary_get_lines_with(data_to_find, filename):
     print("not done")
+
+
+
 
 #find first occurence in a file and replace with something else
 
@@ -389,6 +438,9 @@ def find_replace_one_text(str_to_find, filename):
 def find_replace_one_binary(str_to_find, filename):
     print("not done")
 
+
+
+
 #find all occurences in a file and replace them with something else
 
 def find_replace_all_utf8(str_to_find, filename):
@@ -399,6 +451,11 @@ def find_replace_all_text(str_to_find, filename):
 
 def find_replace_all_binary(data_to_find, filename):
     print("not done")
+
+
+
+
+
 
 #=====TO-DO=====
 
