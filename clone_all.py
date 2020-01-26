@@ -39,7 +39,7 @@ def main():
 
     #download first repo page 
     
-    first_page_name = "first_repo_page.html"
+    first_page_name = "html/first_repo_page.html"
 
     print("Downloading with new modularized IO code")
     #download the first repo page and save it as first_repo_page.html
@@ -47,7 +47,12 @@ def main():
 
     #search for 404 string: user might not even exist, after all
     string_404 = '<img alt="404 &ldquo;This is not the web page you are looking for&rdquo;'
-    
+    if (asio.search(string_404, first_page_name)):
+        print("404: GitHub user " + username + " not found")
+        asio.delete(first_page_name)
+        sys.exit(1)
+    else:
+        print("User exists, proceeding...")
 
     #parse html and look for no repo string
     #from first_repo_page.html
@@ -55,10 +60,14 @@ def main():
     no_repos_string = "have any public repositories yet"
     if (asio.search(no_repos_string, first_page_name)):
         print("User has no repos")
-
+        #can't proceed with program if the user has no repos
+        asio.delete(first_page_name)
+        sys.exit(1)
     else:
         print("User apparently has repos")
     
+    #proceed with program
+    #at this point, it's not a 404, and the user has repos
 
 
 
