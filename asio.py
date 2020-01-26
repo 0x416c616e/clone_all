@@ -300,6 +300,11 @@ def utf8_get_line_with(str_to_find, filename):
     except IOError as e:
         ex_msg(filename, e, "get_line_contains", "searching")
 
+def text_get_line_with(str_to_find, filename):
+    print("not done")
+
+def binary_get_line_with(data_to_find, filename):
+    print("not done")
 
 
 #=====TO-DO=====
