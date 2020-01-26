@@ -11,15 +11,12 @@
 6. Parse the HTML file and look for this:
 	-"&amp;tab=repositories">Next</a></div>"
 7. If the above string is within the document, then you can proceed with getting the next page. Stub: print "there is a next page"
-8. Search for this string in the HTML to see if there is no "next" page of the user's repos:
-	-"disabled="disabled">Next</button></div>"
-9. If the above string is within the HTML, that means there is no additional page of repos.
-10. To-do: how to loop and download multiple files by finding the url of the "next" button's link
-11. To-do: If there are next pages, download them all and loop. 
-12. To-do: Look through all the HTML files again, but this time to find repo download links.
-13. To-do: create a reset.sh script to delete downloaded files. Optional/not required for this to work.
-14. To-do: Use the GitHub repo links to clone all the repos to the repos/ subdirectory.
-15. To-do: used linked list for the page links, use stack for the links of repos to clone
+8. To-do: how to loop and download multiple files by finding the url of the "next" button's link
+9. To-do: If there are next pages, download them all and loop. 
+10. To-do: Look through all the HTML files again, but this time to find repo download links.
+11. To-do: create a reset.sh script to delete downloaded files. Optional/not required for this to work.
+12. To-do: Use the GitHub repo links to clone all the repos to the repos/ subdirectory.
+13. To-do: used linked list for the page links, use stack for the links of repos to clone
 
 
 

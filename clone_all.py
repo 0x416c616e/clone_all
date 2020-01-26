@@ -39,7 +39,7 @@ def main():
 
     #download first repo page 
     
-    first_page_name = "html/first_repo_page.html"
+    first_page_name = "html/repo_page_1.html"
 
     print("Downloading with new modularized IO code")
     #download the first repo page and save it as first_repo_page.html
@@ -68,6 +68,24 @@ def main():
     
     #proceed with program
     #at this point, it's not a 404, and the user has repos
+
+    #see if there is more than one page of repos
+    #if there's more than one page, you will find this string in first_page_name:
+    #tab=repositories">Next</a></div>
+
+    #number of html pages of repos
+    number_of_pages = 1
+
+    #will loop until there is no "next" page,
+    #at which point should_proceed will be set to False
+    should_proceed = True
+
+    next_repo_string = "tab=repositories\">Next</a></div>"
+    if (asio.search(next_repo_string, first_page_name)):
+        print("User has more than one page worth of repos")
+        number_of_pages += 1
+    else:
+        print("user only has one page of repos")    
 
 
 
