@@ -9,7 +9,7 @@ import sys
 import requests
 #io is needed to write UTF-8/Unicode instead of ASCII
 import io
-#Alan's Simple IO: contains 
+#Alan's Simple IO: contains useful functions for doing IO
 import asio
 import time
 
@@ -145,10 +145,11 @@ def main():
                         #at this point, next_page_url is really a line that contains too much stuff, with some
                         #stuff at the beginning and end that needs to be removed
 
-                        #==========================================================
-                        #the commented out block was replaced by the 
-                        #convert this block (separated by spaces) to function in asio.py
 
+                        #the following commented out block was replaced by the get_last_string_from_line_utf8()
+                        #function in asio.py
+                        #==========================================================
+                        #convert this block (separated by spaces) to function in asio.py
                         ##rfind means find the LAST occurrence
                         #prefix_data = "https://"
                         #start_index = next_page_url.rfind(prefix_data)
@@ -162,6 +163,8 @@ def main():
                         ##get rid of stuff at the end after the URL is finished
                         #next_page_url = next_page_url[:end_index]
                         #==========================================================
+
+                        #get only the next page URL from the line and get rid of other stuff
                         next_page_url = asio.get_last_string_from_line_utf8("https://", "s\">Next</a></div>", next_page_url)
 
 
