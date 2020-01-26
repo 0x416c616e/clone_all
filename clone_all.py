@@ -84,11 +84,35 @@ def main():
     if (asio.search(next_repo_string, first_page_name)):
         print("User has more than one page worth of repos")
         number_of_pages += 1
+        #================================================
+        #test getting the single next page, then later put it in a while loop
+        #using should_proceed as the exit condition
+        next_page_url = ""
+        next_page_url = asio.utf8_get_line_with(next_repo_string, first_page_name)
+        if (next_page_url == ""):
+            print("error")
+            sys.exit(1)
+        elif (next_page_url == "not_found"):
+            print("there is no next page")
+            should_proceed = False
+        else:
+            print("Next page URL: " + next_page_url)
+        #================================================
+        #make the above stuff generalizable and able to loop and whatnot
+        #to download and search through as many html pages as possible
+        
+
+
     else:
         print("user only has one page of repos")    
 
 
-
+    #getting here is when you've finished downloading all the html pages
+    #that are just lists of repos
+    #and now you need to get all the individual repo links out of them
+    #if a repo link is this: https://github.com/0x416c616e/clone_all
+    #then its clone link is this: https://github.com/0x416c616e/clone_all.git
+    #just append ".git"
 
     
 

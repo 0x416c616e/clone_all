@@ -245,7 +245,23 @@ def dl_write_utf8(dl_url, filename):
 
 
 
+#=====Open functions=====
 
+#open and return UTF-8
+
+def open_utf8(filename):
+    try:
+        return io.open(filename, "r", encoding="utf-8")
+    except IOError as e:
+        ex_msg(filename, e, "open_utf8", "opening")
+
+#open and return text
+def open_text():
+    print("not done")
+
+#open and return binary
+def open_binary():
+    print("not done")
 
 
 
@@ -265,27 +281,28 @@ def search(str_to_find, filename):
         ex_msg(filename, e, "search", "searching")
 
 
+#return a line that contains a search term
+#from a utf-8 file
+def utf8_get_line_with(str_to_find, filename):
+    try:
+        #open file and read line by line
+        print("")
+        if (exists(filename)):
+            search_file = open_utf8(filename)
+            line = search_file.readline()
+            while line:
+                if (str_to_find in line):
+                    search_file.close()
+                    return line
+                line = search_file.readline()
+            search_file.close()
+            return "not_found"
+    except IOError as e:
+        ex_msg(filename, e, "get_line_contains", "searching")
+
+
 
 #=====TO-DO=====
-
-
-
-
-
-#=====Open functions=====
-
-#open and return UTF-8
-
-def open_utf8():
-    print("not done")
-
-#open and return text
-def open_text():
-    print("not done")
-
-#open and return binary
-def open_binary():
-    print("not done")
 
 
 #=====Upload functions=====
