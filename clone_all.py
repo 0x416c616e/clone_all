@@ -142,31 +142,36 @@ def main():
                     else:
                         print("there is another page")
                         number_of_pages += 1
-                        #rfind means find the LAST occurrence
-                        start_index = next_page_url.rfind("https://")
+                        #at this point, next_page_url is really a line that contains too much stuff, with some
+                        #stuff at the beginning and end that needs to be removed
 
-                        #get rid of beginning of line, starting only with https:// now
-                        next_page_url = next_page_url[start_index:]
-                        #finding where the url ends
-                        trailing_data = "s\">Next</a></div>"
-                        end_index = next_page_url.find(trailing_data)
-                        #add one to avoid an off-by-one error
-                        end_index = end_index + 1
-                        #get rid of stuff at the end after the URL is finished
-                        next_page_url = next_page_url[:end_index]
+                        #==========================================================
+                        #the commented out block was replaced by the 
+                        #convert this block (separated by spaces) to function in asio.py
+
+                        ##rfind means find the LAST occurrence
+                        #prefix_data = "https://"
+                        #start_index = next_page_url.rfind(prefix_data)
+                        ##get rid of beginning of line, starting only with https:// now
+                        #next_page_url = next_page_url[start_index:]
+                        ##finding where the url ends
+                        #trailing_data = "s\">Next</a></div>"
+                        #end_index = next_page_url.find(trailing_data)
+                        ##add one to avoid an off-by-one error
+                        #end_index = end_index + 1
+                        ##get rid of stuff at the end after the URL is finished
+                        #next_page_url = next_page_url[:end_index]
+                        #==========================================================
+                        next_page_url = asio.get_last_string_from_line_utf8("https://", "s\">Next</a></div>", next_page_url)
+
+
                         print("Next page URL for page " + str(number_of_pages) + ": " + next_page_url)
                 
                 #no more pages     
                 else:
-                    print("no more pages to find and download")
-                    print("number of pages: " + str(number_of_pages))
+                    print("No more pages to find and download.")
                     should_proceed = False
             
-            
-
-
-
-
 
         #================================================
         #make the above stuff generalizable and able to loop and whatnot
@@ -175,7 +180,7 @@ def main():
 
 
     else:
-        print("user only has one page of repos")    
+        print("User only has one page of repos.")    
 
 
     #getting here is when you've finished downloading all the html pages
@@ -185,7 +190,7 @@ def main():
     #then its clone link is this: https://github.com/0x416c616e/clone_all.git
     #just append ".git"
 
-    print("number of pages:" + str(number_of_pages))
+    print("Number of pages: " + str(number_of_pages))
 
 
 

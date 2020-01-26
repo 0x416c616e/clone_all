@@ -404,6 +404,34 @@ def binary_get_line_with(data_to_find, filename):
     print("not done")
 
 
+#take a string that has stuff at the beginning and end, and get a string out of it
+#assumes that you've already searched to see if the string is in fact in the line
+
+#find the last instance of a string that starts with beginning and ends in ending
+#from a big line string called line
+#example:
+#example_string = "http://example.com http://google.com/whatever"
+#output = get_last_string_from_line_utf8("http", "com", example_string)
+#print(output)
+#http://google.com
+def get_last_string_from_line_utf8(beginning, ending, line):
+    start_index = line.rfind(beginning)
+    line = line[start_index:]
+    end_index = line.find(ending)
+    end_index = end_index + 1
+    line = line[:end_index]
+    return line
+
+#find last instance of string from text line
+#that starts with a certain string and ends with another string
+#print(get_last_string_from_line_text("abc", "def", "123abcdefabcAAAdef444"))
+#result: abcAAAdef
+def get_last_string_from_line_text(beginning, ending, line):
+    print("not done")
+
+#find last instance of data from binary data
+def get_last_string_from_line_binary(beginning, ending, line_data):
+    print("not done")
 
 
 
