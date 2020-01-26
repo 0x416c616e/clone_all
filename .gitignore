@@ -1,4 +1,4 @@
-repos/
+repos/*
 !repos/blank.txt
-html/
+html/*
 !html/blank.txt
