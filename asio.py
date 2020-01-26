@@ -1,9 +1,19 @@
 #!/usr/bin/env python3
-#Alan's Simple IO
+#Alan's Simple IO module (ASIO)
+
+#The purpose of this module is to make IO simpler.
+#You can open a file with a single function call.
+#You can write data to a file with a single function call.
+#You can open and load data from a file with a single function call.
+#You can download a file with a single function call.
+#You can download a file and write it to disk with a single function call.
+
 
 import sys
 import requests
 import io
+
+#=====Write functions=====
 
 #function for safely downloading utf8 text data
 #won't work for binary files i.e. jpeg or exe
@@ -32,6 +42,7 @@ def write_text(filename, data):
         sys.exit(1)
 
 #write binary data to a file
+#example: write_binary("something.jpg", response.content)
 def write_binary(filename, data):
     try:
         write_file = open(filename, "wb")
@@ -42,6 +53,8 @@ def write_binary(filename, data):
         print(e.args)
         sys.exit(1)
 
+
+#=====Download functions=====
 
 #function for safely downloading a web page
 #returns the response object
@@ -69,4 +82,46 @@ def download(dl_url):
         #not written to disk at this point
         return response
 
-    
+#~~~Functions that download files and then write to disk~~~
+
+#download and save binary
+def dl_write_bin(dl_url, filename):
+    response = download(dl_url)
+    write_binary(filename, response.content)
+
+
+#download and save text
+def dl_write_text(dl_url, filename):
+    response = download(dl_url)
+    write_text(filename, response.text)
+
+
+#download and save UTF-8
+def dl_write_utf8(dl_url, filename):
+    response = download(dl_url)
+    write_utf8(filename, response.text)
+
+
+
+#=====TO-DO=====
+
+
+
+#=====Open functions=====
+
+#open and return UTF-8
+
+#open and return text
+
+#open and return binary
+
+
+
+#=====Upload functions=====
+
+#upload utf-8 file
+
+#upload text file
+
+#upload binary file
+

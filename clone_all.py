@@ -39,14 +39,12 @@ def main():
 
     #download first repo page 
     
-    response = ""
     
-    
-    #download
-    response = asio.download(first_repo_page_url)
 
-    #write HTTP response to file
-    asio.write_utf8("first_repo_page.html", response.text)
+    print("Downloading with new modularized IO code")
+    #download the first repo page and save it as first_repo_page.html
+    asio.dl_write_utf8(first_repo_page_url, "first_repo_page.html")
+    
 
 
     
