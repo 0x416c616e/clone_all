@@ -233,6 +233,10 @@ def main():
     number_of_repos = len(line_list)
     print("Repo clone URLs for all " + str(number_of_repos) + " repos are ready.")
 
+    #made full clone links
+    for i in range(0, number_of_repos):
+        line_list[i] = "https://github.com" + line_list[i] + ".git"
+
     print("Cleanup...")
     #delete html files
     for i in range(1, (number_of_pages + 1)):
@@ -240,6 +244,11 @@ def main():
         asio.delete_if_exists(file_to_delete)
     print("Finished cleanup")
     print("Proceeding to cloning")
+
+    #repo cloning time!!!!!!
+    
+
+
 
 
 #boilerplate
