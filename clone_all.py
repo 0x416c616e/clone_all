@@ -196,7 +196,16 @@ def main():
     print("Number of pages: " + str(number_of_pages))
     print("Now time to find the repo links from the pages")
     #TO-DO 10 find repo links from html 
-    
+    #beginning of repo line: <a href="/0x416c616e/
+    #end of repo line: itemprop="name codeRepository" >
+    #utf8_get_lines_with()
+
+    #need to put the following line in a loop:
+    line_list = asio.utf8_get_lines_with("itemprop=\"name codeRepository\" >", "html/repo_page_1.html")
+    for line in line_list:
+        print("line loop test: " + line)
+        print("")
+
 
 
 

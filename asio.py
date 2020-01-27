@@ -311,7 +311,7 @@ def dl_write_utf8(dl_url, filename):
 
 #=====Open functions=====
 
-#open and return UTF-8
+#open (for reading) and return UTF-8
 
 def open_utf8(filename):
     try:
@@ -384,7 +384,6 @@ def search_binary(data_to_find, filename):
 def utf8_get_line_with(str_to_find, filename):
     try:
         #open file and read line by line
-        print("")
         if (exists(filename)):
             search_file = open_utf8(filename)
             line = search_file.readline()
@@ -397,6 +396,9 @@ def utf8_get_line_with(str_to_find, filename):
             return "not_found"
     except IOError as e:
         ex_msg(filename, e, "get_line_contains", "searching")
+
+
+
 
 #return single line that contains a search term
 #from a text file
@@ -442,10 +444,33 @@ def get_last_string_from_line_binary(beginning, ending, line_data):
 
 #get all lines with a search string
 
-#get all lines in a utf8-encoded file
-#that contain a certain string
+#get all lines in a utf8-encoded file that contain a string
+#return a list, kind of like an array, but use list.append(item) to populate
 def utf8_get_lines_with(str_to_find, filename):
-    print("not done")
+    found_at_least_one = False
+    line_list = []
+    try:
+        #open file and read line by line
+        if (exists(filename)):
+            search_file = open_utf8(filename)
+            line = search_file.readline()
+            while line:
+                if (str_to_find in line):
+                    #add search result to the list
+                    print("found result to append to list: " + line)
+                    line_list.append(line)
+                    found_at_least_one = True
+                line = search_file.readline()
+            search_file.close()
+            if (found_at_least_one):
+                #return list of lines that match str_to_find
+                return line_list
+            else:
+                return ["not_found"]
+                #caller should check if (line_list[0] == "not_found")
+    except IOError as e:
+        ex_msg(filename, e, "utf8_get_lines_with", "searching")
+
 
 #get all lines in a text file
 #that contain a certain string
@@ -454,13 +479,25 @@ def text_get_lines_with(str_to_find, filename):
 
 #get all lines in a binary file
 #that contain certain data
-def binary_get_lines_with(data_to_find, filename):
+def binary_get_lines_with(str_to_find, filename):
     print("not done")
 
 
+#clean multiple lines instead of just one
+#like get_last_string_from_line_utf8 but for a list of lines
+def clean_lines_utf8(beginning, ending, line_list):
+    print("remove stuff before beginning")
+    print("and remove stuff after ending")
+    print("then return list of cleaned-up lines")
+
+def clean_lines_text(beginning, ending, line_list):
+    print("not done")
+
+def clean_lines_binary(beginning, ending, line_list):
+    print("not done")
 
 
-#find first occurence in a file and replace with something else
+#find first occurrence in a file and replace with something else
 
 def find_replace_one_utf8(str_to_find, filename):
     print("not done")
