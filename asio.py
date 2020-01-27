@@ -445,10 +445,9 @@ def get_last_string_from_line_binary(beginning, ending, line_data):
 #get all lines with a search string
 
 #get all lines in a utf8-encoded file that contain a string
-#return a list, kind of like an array, but use list.append(item) to populate
-def utf8_get_lines_with(str_to_find, filename):
+#appends to the list that is passed into the function as an arg
+def utf8_get_lines_with(str_to_find, filename, line_list):
     found_at_least_one = False
-    line_list = []
     try:
         #open file and read line by line
         if (exists(filename)):
@@ -457,29 +456,23 @@ def utf8_get_lines_with(str_to_find, filename):
             while line:
                 if (str_to_find in line):
                     #add search result to the list
-                    print("found result to append to list: " + line)
                     line_list.append(line)
                     found_at_least_one = True
                 line = search_file.readline()
             search_file.close()
-            if (found_at_least_one):
-                #return list of lines that match str_to_find
-                return line_list
-            else:
-                return ["not_found"]
-                #caller should check if (line_list[0] == "not_found")
+
     except IOError as e:
         ex_msg(filename, e, "utf8_get_lines_with", "searching")
 
 
 #get all lines in a text file
 #that contain a certain string
-def text_get_lines_with(str_to_find, filename):
+def text_get_lines_with(str_to_find, filename, line_list):
     print("not done")
 
 #get all lines in a binary file
 #that contain certain data
-def binary_get_lines_with(str_to_find, filename):
+def binary_get_lines_with(str_to_find, filename, line_list):
     print("not done")
 
 

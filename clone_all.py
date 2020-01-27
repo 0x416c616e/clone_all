@@ -201,12 +201,15 @@ def main():
     #utf8_get_lines_with()
 
     #need to put the following line in a loop:
-    line_list = asio.utf8_get_lines_with("itemprop=\"name codeRepository\" >", "html/repo_page_1.html")
+    line_list = []
+    for i in range(1, (number_of_pages + 1)):
+        html_file = "html/repo_page_" + str(i) + ".html"
+        print("Searching " + html_file + "for repo links...")
+        asio.utf8_get_lines_with("itemprop=\"name codeRepository\" >", html_file, line_list)
+
     for line in line_list:
-        print("line loop test: " + line)
-        print("")
-
-
+        print("List line: " + line)
+    print(username + " has " + str(len(line_list)) + " public repos on GitHub.")
 
 
 #boilerplate
