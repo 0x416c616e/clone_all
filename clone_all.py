@@ -194,6 +194,9 @@ def main():
     #just append ".git"
 
     print("Number of pages: " + str(number_of_pages))
+    print("Now time to find the repo links from the pages")
+    #TO-DO 10 find repo links from html 
+    
 
 
 

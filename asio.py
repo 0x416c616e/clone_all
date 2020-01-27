@@ -60,6 +60,8 @@ def confirm(operation, filename):
     if ((choice.lower() == "n") or (choice.lower() == "no")):
         #user does not want to proceed with IO operation
         return False
+    else:
+        return True
 
 #ask a user before deleting something
 def confirm_delete(filename):
@@ -341,10 +343,11 @@ def search_utf8(str_to_find, filename):
     try:
         file_to_search = open(filename, encoding="utf8", mode="r")
         if str_to_find in file_to_search.read():
+            file_to_search.close()
             return True
         else:
+            file_to_search.close()
             return False
-        file_to_search.close()
     except IOError as e:
         ex_msg(filename, e, "search_utf8", "searching")
 
@@ -353,10 +356,11 @@ def search_text(str_to_find, filename):
     try:
         file_to_search = open(filename, "r")
         if str_to_find in file_to_search.read():
+            file_to_search.close()
             return True
         else:
+            file_to_search.close()
             return False
-        file_to_search.close()
     except IOError as e:
         ex_msg(filename, e, "search_text", "searching")
 
@@ -365,10 +369,11 @@ def search_binary(data_to_find, filename):
     try:
         file_to_search = open(filename, "rb")
         if data_to_find in file_to_search.read():
+            file_to_search.close()
             return True
         else:
+            file_to_search.close()
             return False
-        file_to_search.close()
     except IOError as e:
         ex_msg(filename, e, "search_binary", "searching")
 
