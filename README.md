@@ -24,3 +24,14 @@ The repos will be cloned in repos/username_goes_here/repo_name. Example: repos/0
 ```
 
 All repos you downloaded will be deleted.
+
+## Cloning tons of repos can lead to performance issues!
+
+If you clone tons of repos on Windows, the OS will have issues with indexing stuff because it tries to build local searches. In order to fix this, go to Control Panel -> Indexing Options -> Advanced -> Rebuild and hit Yes.
+
+On other OSes (which I haven't tested cloning tons and tons of repos on anything except Windows 10), you might have similar issues with local search indexes, so keep that in mind.
+
+In the future, I might add the ability to choose to download repos instead of cloning them. I'm not sure if that will be better for performance or not.
+
+
+
