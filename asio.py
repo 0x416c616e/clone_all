@@ -55,7 +55,7 @@ def clear_file(filename):
 #exampe usage: confirm("example.txt", "delete")
 def confirm(operation, filename):
     question = "Are you sure you want to "
-    question += + operation + " " + filename + "? y/n: "
+    question += operation + " " + filename + "? y/n: "
     choice = input(question)
     if ((choice.lower() == "n") or (choice.lower() == "no")):
         #user does not want to proceed with IO operation

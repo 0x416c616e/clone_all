@@ -27,10 +27,16 @@ def main():
     else:
         #print("Correct number of command line args.")
         if (sys.argv[1] == "--reset"):
-            repo_dir = "repos"
-            asio.delete_directory(repo_dir)
-            asio.make_directory(repo_dir)
-            asio.create_blank("blank.txt")
+            #delete all repos
+            confirmation = asio.confirm("delete", "all downloaded repos")
+            if (confirmation):
+                print("Deleting repos")
+                repo_dir = "repos"
+                asio.delete_directory(repo_dir)
+                asio.make_directory(repo_dir)
+                asio.create_blank("repos/blank.txt")
+            print("Exiting")
+            sys.exit()
         else:
             username = sys.argv[1]
         #print("Username: " + username)
