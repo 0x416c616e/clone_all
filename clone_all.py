@@ -12,6 +12,7 @@ import io
 #Alan's Simple IO: contains useful functions for doing IO
 import asio
 import time
+import os
 
 
 #main program 'driver' function
@@ -31,6 +32,9 @@ def main():
             confirmation = asio.confirm("delete", "all downloaded repos")
             if (confirmation):
                 print("Deleting repos")
+                print("If you ever get an error with trying to reset, it might be")
+                print("because you quit the program mid-cloning, in which case you")
+                print("manually need to delete the contents of the repos/ folder.")
                 repo_dir = "repos"
                 asio.delete_directory(repo_dir)
                 asio.make_directory(repo_dir)
@@ -249,8 +253,26 @@ def main():
     #=============================================
     #repo cloning time!!!!!!
     #firstly, make a subfolder for the user
-    #then cwd to use subprocess to clone
+    #then cwd to use os.system() to clone
     #and iterate through line_list elements
+
+    #folders contain the username and a unix timestamp
+    #to resolve the issue of trying to clone into an existing directory
+    #so now you can clone the same user's stuff multiple times
+    user_folder = "repos/" + str(username) + "_" + str(int(time.time()))
+
+    #exit if the fold name already exists, which is unlikely
+    if asio.exists(user_folder):
+        print("Error: directory with that name already exists")
+        sys.exit(1)
+
+    asio.make_directory(user_folder)
+    os.chdir(user_folder)
+    for i in range(0, number_of_repos):
+        clone_command = "git clone " + line_list[i]
+        os.system(clone_command)
+        time.sleep(2)
+    
 
 
 
