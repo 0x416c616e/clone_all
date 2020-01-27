@@ -26,7 +26,13 @@ def main():
         sys.exit(1)
     else:
         #print("Correct number of command line args.")
-        username = sys.argv[1]
+        if (sys.argv[1] == "--reset"):
+            repo_dir = "repos"
+            asio.delete_directory(repo_dir)
+            asio.make_directory(repo_dir)
+            asio.create_blank("blank.txt")
+        else:
+            username = sys.argv[1]
         #print("Username: " + username)
     #proceeding with program now that cli arg has been finished
 
@@ -52,7 +58,7 @@ def main():
         asio.delete(first_page_name)
         sys.exit(1)
     else:
-        print("User exists, proceeding...")
+        print("User profile found")
 
     #parse html and look for no repo string
     #from first_repo_page.html
@@ -64,7 +70,7 @@ def main():
         asio.delete(first_page_name)
         sys.exit(1)
     else:
-        print("User apparently has repos")
+        print("User has public repos")
     
     #proceed with program
     #at this point, it's not a 404, and the user has repos
@@ -75,7 +81,7 @@ def main():
 
     #number of html pages of repos
     number_of_pages = 1
-    print("Downloaded page " + str(number_of_pages))
+    print("Downloaded repo page " + str(number_of_pages))
     #program will loop until there is no "next" page,
     #at which point should_proceed will be set to False
     should_proceed = True
@@ -83,7 +89,7 @@ def main():
     #getting first 'next page'
     next_repo_string = "tab=repositories\">Next</a></div>"
     if (asio.search_utf8(next_repo_string, first_page_name)):
-        print("User has more than one page worth of repos")
+        #print("User has more than one page worth of repos")
         number_of_pages += 1
         #================================================
         #test getting the single next page, then later put it in a while loop
@@ -130,17 +136,17 @@ def main():
                 asio.dl_write_utf8(current_repo_page_url, page_name)
                 #if there is yet another page
                 if (asio.search_utf8(next_repo_string, page_name)):
-                    print("another page was found")
+                    #print("another page was found")
                     next_page_url = ""
                     next_page_url = asio.utf8_get_line_with(next_repo_string, page_name)
                     if (next_page_url == ""):
                         print("error")
                         sys.exit(1)
                     elif (next_page_url == "not_found"):
-                        print("there is no next page")
+                        print("There is no next page")
                         should_proceed = False
                     else:
-                        print("there is another page")
+                        #print("there is another page")
                         number_of_pages += 1
                         #at this point, next_page_url is really a line that contains too much stuff, with some
                         #stuff at the beginning and end that needs to be removed
@@ -167,7 +173,7 @@ def main():
                         #get only the next page URL from the line and get rid of other stuff
                         next_page_url = asio.get_last_string_from_line_utf8("https://", "s\">Next</a></div>", next_page_url)
 
-                        print("Downloaded page " + str(number_of_pages))
+                        print("Downloaded repo page " + str(number_of_pages))
                         #print("Next page URL for page " + str(number_of_pages) + ": " + next_page_url)
                 
                 #no more pages     
@@ -193,14 +199,13 @@ def main():
     #then its clone link is this: https://github.com/0x416c616e/clone_all.git
     #just append ".git"
 
-    print("Number of pages: " + str(number_of_pages))
-    print("Now time to find the repo links from the pages")
+    print("Total number of repo pages downloaded: " + str(number_of_pages))
 
     #get all lines of repo links from all the html files
     line_list = []
     for i in range(1, (number_of_pages + 1)):
         html_file = "html/repo_page_" + str(i) + ".html"
-        print("Searching " + html_file + "for repo links...")
+        print("Searching page " + str(i) + " for repo links")
         asio.utf8_get_lines_with("itemprop=\"name codeRepository\" >", html_file, line_list)
 
     #for line in line_list:
@@ -218,7 +223,17 @@ def main():
     #/username/repo_name
     #But now they need to change to something like this:
     #https://github.com/username/repo_name.git
-    
+
+    number_of_repos = len(line_list)
+    print("Repo clone URLs for all " + str(number_of_repos) + " repos are ready.")
+
+    print("Cleanup...")
+    #delete html files
+    for i in range(1, (number_of_pages + 1)):
+        file_to_delete = "html/repo_page_" + str(i) + ".html"
+        asio.delete_if_exists(file_to_delete)
+    print("Finished cleanup")
+    print("Proceeding to cloning")
 
 
 #boilerplate

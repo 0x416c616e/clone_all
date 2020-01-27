@@ -81,6 +81,12 @@ def delete_directory(folder):
     except IOError as e:
         ex_msg(folder, e, "delete_directory", "deleting")
 
+#make a new directory
+def make_directory(folder):
+    try:
+        os.mkdir(folder)
+    except IOError as e:
+        ex_msg(folder, e, "make_directory", "creating directory")
 
 #=====Existence functions=====
 #check if file exists
