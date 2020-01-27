@@ -27,11 +27,10 @@ All repos you downloaded will be deleted.
 
 ## Cloning tons of repos can lead to performance issues!
 
-If you clone tons of repos on Windows, the OS will have issues with indexing stuff because it tries to build local searches. In order to fix this, go to Control Panel -> Indexing Options -> Advanced -> Rebuild and hit Yes.
+If you clone tons of repos on Windows, the OS can have issues with indexing stuff because it tries to build local searches. In order to fix this, go to Control Panel -> Indexing Options -> Advanced -> Rebuild and hit Yes. Make sure your computer won't go into sleep mode (change power options to prevent it from going tosleep), then let it sit and rebuild the search index for a couple hours. Then restart the computer and it should be fine.  
 
-On other OSes (which I haven't tested cloning tons and tons of repos on anything except Windows 10), you might have similar issues with local search indexes, so keep that in mind.
+On other OSes like macOS or Linux distros (which I haven't tested cloning tons and tons of repos on), you might have similar issues with local search indexes, so keep that in mind.
 
 In the future, I might add the ability to choose to download repos instead of cloning them. I'm not sure if that will be better for performance or not.
-
 
 
