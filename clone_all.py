@@ -269,7 +269,7 @@ def main():
     for i in range(0, number_of_repos):
         clone_command = "git clone " + line_list[i]
         os.system(clone_command)
-        time.sleep(2)
+        time.sleep(3)
     
 
 
