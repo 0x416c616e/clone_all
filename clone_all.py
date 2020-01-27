@@ -13,7 +13,7 @@ import io
 import asio
 import time
 import os
-
+import shutil
 
 #main program 'driver' function
 def main():
@@ -32,13 +32,11 @@ def main():
             confirmation = asio.confirm("delete", "all downloaded repos")
             if (confirmation):
                 print("Deleting repos")
-                print("If you ever get an error with trying to reset, it might be")
-                print("because you quit the program mid-cloning, in which case you")
-                print("manually need to delete the contents of the repos/ folder.")
-                repo_dir = "repos"
-                asio.delete_directory(repo_dir)
+                repo_dir = "repos/"
+                asio.force_delete_directory(repo_dir)
                 asio.make_directory(repo_dir)
                 asio.create_blank("repos/blank.txt")
+                print("Successfully deleted all repos")
             print("Exiting")
             sys.exit()
         else:

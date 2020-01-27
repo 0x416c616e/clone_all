@@ -81,6 +81,14 @@ def delete_directory(folder):
     except IOError as e:
         ex_msg(folder, e, "delete_directory", "deleting")
 
+#when delete_directory() doesn't work, try this instead:
+def force_delete_directory(folder):
+    try:
+        cli_str = "rm -rf " + str(folder)
+        os.system(cli_str)
+    except IOError as e:
+        ex_msg(folder, e, "force_delete_directory", "force-deleting")
+
 #make a new directory
 def make_directory(folder):
     try:
