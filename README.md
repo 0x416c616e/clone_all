@@ -24,7 +24,3 @@ The repos will be cloned in repos/username_goes_here/repo_name. Example: repos/0
 ```
 
 All repos you downloaded will be deleted.
-
-The HTML folder is just for temporary downloads. The program downloads HTML pages from GitHub that contain lists of the user's repos. They are temporarily stored in the html/ folder, but you can disregard them. They will be deleted after the program finishes running.
-
-

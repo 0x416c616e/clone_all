@@ -245,8 +245,12 @@ def main():
     print("Finished cleanup")
     print("Proceeding to cloning")
 
+
+    #=============================================
     #repo cloning time!!!!!!
-    
+    #firstly, make a subfolder for the user
+    #then cwd to use subprocess to clone
+    #and iterate through line_list elements
 
 
 
