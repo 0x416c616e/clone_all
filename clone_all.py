@@ -25,23 +25,23 @@ def main():
         print("clone_all.py username_goes_here")
         sys.exit(1)
     else:
-        print("Correct number of command line args.")
+        #print("Correct number of command line args.")
         username = sys.argv[1]
-        print("Username: " + username)
+        #print("Username: " + username)
     #proceeding with program now that cli arg has been finished
 
 
     #building URL of initial repo tab page
     #example: https://github.com/0x416c616e?tab=repositories
     first_repo_page_url = "https://github.com/" + username + "?tab=repositories"
-    print("URL: " + first_repo_page_url)
+    #print("URL: " + first_repo_page_url)
 
 
     #download first repo page 
     
     first_page_name = "html/repo_page_1.html"
 
-    print("Downloading with new modularized IO code")
+    #print("Downloading with new modularized IO code")
     #download the first repo page and save it as first_repo_page.html
     asio.dl_write_utf8(first_repo_page_url, first_page_name)
 
@@ -75,7 +75,7 @@ def main():
 
     #number of html pages of repos
     number_of_pages = 1
-
+    print("Downloaded page " + str(number_of_pages))
     #program will loop until there is no "next" page,
     #at which point should_proceed will be set to False
     should_proceed = True
@@ -115,7 +115,7 @@ def main():
             end_index = end_index + 1
             #get rid of stuff at the end after the URL is finished
             next_page_url = next_page_url[:end_index]
-            print("Next page URL for page 2:" + next_page_url)
+            #print("Next page URL for page 2:" + next_page_url)
 
             #loop for finding pages 2+
             while (should_proceed == True):
@@ -123,8 +123,8 @@ def main():
                 current_repo_page_url = next_page_url
                 #repo_page_2.html, repo_page_3.html, repo_page_4.html, etc
                 page_name = "html/repo_page_" + str(number_of_pages) + ".html"
-                print("page name: " + page_name)
-                print("current repo page url:" + current_repo_page_url)
+                #print("page name: " + page_name)
+                #print("current repo page url:" + current_repo_page_url)
                 #I got a 429 Too Many Requests error until I added this sleep()
                 time.sleep(2)
                 asio.dl_write_utf8(current_repo_page_url, page_name)
@@ -167,8 +167,8 @@ def main():
                         #get only the next page URL from the line and get rid of other stuff
                         next_page_url = asio.get_last_string_from_line_utf8("https://", "s\">Next</a></div>", next_page_url)
 
-
-                        print("Next page URL for page " + str(number_of_pages) + ": " + next_page_url)
+                        print("Downloaded page " + str(number_of_pages))
+                        #print("Next page URL for page " + str(number_of_pages) + ": " + next_page_url)
                 
                 #no more pages     
                 else:
@@ -195,21 +195,30 @@ def main():
 
     print("Number of pages: " + str(number_of_pages))
     print("Now time to find the repo links from the pages")
-    #TO-DO 10 find repo links from html 
-    #beginning of repo line: <a href="/0x416c616e/
-    #end of repo line: itemprop="name codeRepository" >
-    #utf8_get_lines_with()
 
-    #need to put the following line in a loop:
+    #get all lines of repo links from all the html files
     line_list = []
     for i in range(1, (number_of_pages + 1)):
         html_file = "html/repo_page_" + str(i) + ".html"
         print("Searching " + html_file + "for repo links...")
         asio.utf8_get_lines_with("itemprop=\"name codeRepository\" >", html_file, line_list)
 
-    for line in line_list:
-        print("List line: " + line)
+    #for line in line_list:
+    #    print("List line: " + line)
     print(username + " has " + str(len(line_list)) + " public repos on GitHub.")
+
+    #getting relative repo links from html lines
+    beginning_str = '/' + str(username)
+    ending_str = '" itemprop='
+    asio.clean_lines_utf8(beginning_str, ending_str, line_list)
+    print("Cleaned up repo links")
+
+
+    #at this point, the items in the list are like this:
+    #/username/repo_name
+    #But now they need to change to something like this:
+    #https://github.com/username/repo_name.git
+    
 
 
 #boilerplate

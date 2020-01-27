@@ -421,6 +421,8 @@ def binary_get_line_with(data_to_find, filename):
 #output = get_last_string_from_line_utf8("http", "com", example_string)
 #print(output)
 #http://google.com
+#this one is used for downloading example files, don't mess with it
+#if you want different string-slicing behavior, make another function
 def get_last_string_from_line_utf8(beginning, ending, line):
     start_index = line.rfind(beginning)
     line = line[start_index:]
@@ -428,6 +430,21 @@ def get_last_string_from_line_utf8(beginning, ending, line):
     end_index = end_index + 1
     line = line[:end_index]
     return line
+
+
+#this one is... ehhh... not very well done
+#it works for my specific use in clone_all.py
+#also ends 1 index value earlier than normal
+#which is intended for a specific use-case but not for general stuff
+def get_first_string_from_line_utf8(beginning, ending, line):
+    start_index = line.find(beginning)
+    line = line[start_index:]
+    end_index = line.find(ending)
+    line = line[:end_index]
+    return line
+#the above function is used for getting repo links from downloaded html github repo pages
+
+
 
 #find last instance of string from text line
 #that starts with a certain string and ends with another string
@@ -479,9 +496,16 @@ def binary_get_lines_with(str_to_find, filename, line_list):
 #clean multiple lines instead of just one
 #like get_last_string_from_line_utf8 but for a list of lines
 def clean_lines_utf8(beginning, ending, line_list):
-    print("remove stuff before beginning")
-    print("and remove stuff after ending")
-    print("then return list of cleaned-up lines")
+    #I think I can just use get_last_string_from_line_utf8 and a loop
+    for i in range(0, len(line_list)):
+        line_list[i] = get_first_string_from_line_utf8(beginning, ending, line_list[i])
+
+
+
+
+
+
+
 
 def clean_lines_text(beginning, ending, line_list):
     print("not done")
