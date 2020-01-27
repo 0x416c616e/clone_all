@@ -81,9 +81,17 @@ def delete_directory(folder):
     except IOError as e:
         ex_msg(folder, e, "delete_directory", "deleting")
 
-#when delete_directory() doesn't work, try this instead:
+#when delete_directory() doesn't work, try this force_delete instead
+#but be very careful when using it!
 def force_delete_directory(folder):
     try:
+        #exit the program if this function is used in an unsafe way
+        if ((folder == "/") or ("no-preserve-root" in folder)):
+            print("Error: dangerous usage of force_delete_directory()!")
+            print("Argument provided: " + str(folder))
+            print("Exiting")
+            sys.exit(1)
+        #proceed with deletion
         cli_str = "rm -rf " + str(folder)
         os.system(cli_str)
     except IOError as e:
